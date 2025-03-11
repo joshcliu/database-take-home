@@ -93,11 +93,6 @@ def optimize_graph(
     """
     print("Starting graph optimization...")
 
-    # Create a copy of the initial graph to modify
-    optimized_graph = {}
-    for node, edges in initial_graph.items():
-        optimized_graph[node] = dict(edges)
-
     # =============================================================
     # TODO: Implement your optimization strategy here
     # =============================================================
@@ -121,41 +116,27 @@ def optimize_graph(
     # - All nodes must remain in the graph
     # - Edge weights must be positive and ≤ 10
 
-    # ---------------------------------------------------------------
-    # EXAMPLE: Simple strategy to meet edge count constraint
     # This is just a basic example - you should implement a more
-    # sophisticated strategy based on query analysis!
-    # ---------------------------------------------------------------
+    optimized_graph = {}
+    threshold = 50
+    smallest_cycle = 15
+    # Smallest cycle
+    for node in range(smallest_cycle):
+        optimized_graph[f'{node}'] = {f'{(node + 1) % smallest_cycle}' : 1}
 
-    # Count total edges in the initial graph
-    total_edges = sum(len(edges) for edges in optimized_graph.values())
+    # Jump from smallest cycle to medium cycle
+    optimized_graph[f'{smallest_cycle - 1}'][smallest_cycle] = 1
 
-    # If we exceed the limit, we need to prune edges
-    if total_edges > max_total_edges:
-        print(
-            f"Initial graph has {total_edges} edges, need to remove {total_edges - max_total_edges}"
-        )
+    # Medium cycle
+    for node in range(smallest_cycle, threshold):
+        optimized_graph[f'{node}'] = {f'{(node - smallest_cycle + 1) % (threshold - smallest_cycle) + smallest_cycle}' : 1}
 
-        # Example pruning logic (replace with your optimized strategy)
-        edges_to_remove = total_edges - max_total_edges
-        removed = 0
+    # Jump from medium cycle back to small cycle
+    optimized_graph[f'{threshold - 1}']['0'] = 4
 
-        # Sort nodes by number of outgoing edges (descending)
-        nodes_by_edge_count = sorted(
-            optimized_graph.keys(), key=lambda n: len(optimized_graph[n]), reverse=True
-        )
-
-        # Remove edges from nodes with the most connections first
-        for node in nodes_by_edge_count:
-            if removed >= edges_to_remove:
-                break
-
-            # As a simplistic example, remove the edge with lowest weight
-            if len(optimized_graph[node]) > 1:  # Ensure node keeps at least one edge
-                # Find edge with minimum weight
-                min_edge = min(optimized_graph[node].items(), key=lambda x: x[1])
-                del optimized_graph[node][min_edge[0]]
-                removed += 1
+    # Straight from Nodes 50-499 to Node 0
+    for node in range(threshold, NUM_NODES):
+        optimized_graph[f'{node}'] = {'0' : 1}
 
     # =============================================================
     # End of your implementation

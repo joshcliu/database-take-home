@@ -238,17 +238,17 @@ def print_results_summary(results: Dict) -> None:
     print(f"{'QUERY RESULTS SUMMARY':^50}")
     print("=" * 50)
 
-    print(f"\n✓ Success rate: {success_rate:.1f}%")
+    print(f"Success rate: {success_rate:.1f}%")
     if median_path != float("inf"):
-        print(f"🛣️  Median path length: {median_path:.2f} steps")
+        print(f"Median path length: {median_path:.2f} steps")
     else:
-        print(f"🛣️  Median path length: ∞ (could not reach targets)")
+        print(f"Median path length: ∞ (could not reach targets)")
 
     # Distribution summary
     successful_queries = sum(1 for r in results["detailed_results"] if r["is_success"])
     total_queries = len(results["detailed_results"])
 
-    print(f"\n📊 QUERIES: {successful_queries}/{total_queries} successful")
+    print(f"QUERIES: {successful_queries}/{total_queries} successful")
 
     # Print path length ranges if we have successful queries
     if successful_queries > 0 and median_path != float("inf"):
@@ -261,8 +261,8 @@ def print_results_summary(results: Dict) -> None:
         if path_lengths:
             min_path = min(path_lengths)
             max_path = max(path_lengths)
-            print(f"📏 Path length range: {min_path:.1f} - {max_path:.1f} steps")
-            print(f"   (only considers queries with finite median path lengths)")
+            print(f"Path length range: {min_path:.1f} - {max_path:.1f} steps")
+            print(f"(only considers queries with finite median path lengths)")
 
     print("=" * 50)
 

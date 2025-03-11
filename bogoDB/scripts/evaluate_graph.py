@@ -69,12 +69,12 @@ def validate_graph(
                 )
 
     # All checks passed
-    print(f"✅ Graph has {total_edges} edges (max: {max_total_edges})")
+    print(f"Graph has {total_edges} edges (max: {max_total_edges})")
     print(
-        f"✅ Maximum edges per node: {max(len(edges) for edges in graph.values())} (max: {max_edges_per_node})"
+        f"Maximum edges per node: {max(len(edges) for edges in graph.values())} (max: {max_edges_per_node})"
     )
-    print(f"✅ All edge weights are within valid range (0-10)")
-    print("✅ All graph constraints satisfied")
+    print(f"All edge weights are within valid range (0-10)")
+    print("All graph constraints satisfied")
 
     return True, "Graph is valid"
 
@@ -175,7 +175,7 @@ def compare_results(
 
     if success_change != 0:
         print(
-            f"  {'✅ Improvement' if success_change > 0 else '❌ Regression'}: {abs(success_change):.1f}%"
+            f"  {'Improvement' if success_change > 0 else 'Regression'}: {abs(success_change):.1f}%"
         )
 
     print(f"\nPATH LENGTHS (successful queries only):")
@@ -188,7 +188,7 @@ def compare_results(
 
     if optimized_median != float("inf") and initial_median != float("inf"):
         print(
-            f"  {'✅ Improvement' if path_improvement_pct > 0 else '❌ Regression'}: {abs(path_improvement_pct):.1f}%"
+            f"  {'Improvement' if path_improvement_pct > 0 else 'Regression'}: {abs(path_improvement_pct):.1f}%"
         )
 
     print(f"\nCOMBINED SCORE (success rate × path efficiency):")
